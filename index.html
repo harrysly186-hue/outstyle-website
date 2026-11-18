@@ -314,6 +314,14 @@
       .x-field input[type="file"] { border-bottom-style: dashed; font-size: 14px; }
       .x-field small { font: var(--type-caption); color: rgb(246 244 238 / 0.7); }
       .x-form .x-btn { justify-self: start; }
+      .x-form__send { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+      .x-form__send small { font: var(--type-caption); color: rgb(246 244 238 / 0.7); }
+      .x-sent { align-self: start; border-top: 1px solid var(--x-line-on); padding-top: 28px; }
+      .x-sent[hidden] { display: none; }
+      .x-sent h3 { font-family: var(--x-serif); font-weight: 500; font-size: clamp(26px, 2.8vw, 36px); line-height: 1.15; color: var(--x-off); margin: 0 0 14px; }
+      .x-sent p { font: var(--weight-regular) var(--size-prose)/1.6 var(--sans); color: rgb(246 244 238 / 0.85); margin: 0; max-width: 46ch; }
+      .x-sent a { color: var(--x-sand); text-decoration: none; border-bottom: 1px solid var(--x-line-on); white-space: nowrap; }
+      .x-sent a:hover { border-color: var(--x-sand); }
       .x-dark :focus-visible { outline-color: var(--x-sand); }
       .x-details { border-left: 1px solid var(--x-line-on); padding-left: clamp(24px, 3vw, 48px); }
       .x-details dl { margin: 0; }
@@ -627,7 +635,12 @@
                 <p class="x-lede">Tell us about your garden and Harry will get back to you with a clear, free, no-obligation quote.</p>
               </div>
               <div class="x-contact">
-                <form class="x-form x-reveal" id="quote-form" action="mailto:harry@outstyle.com.au" method="post" enctype="text/plain">
+                <form class="x-form x-reveal" id="quote-form" action="https://formsubmit.co/harry@outstyle.com.au" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="_subject" value="New quote request – outstyle.com.au" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_next" value="https://outstyle.com.au/?sent=1#contact" />
+                  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
                   <div class="x-field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required /></div>
                   <div class="x-field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required /></div>
                   <div class="x-field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" /></div>
@@ -651,11 +664,18 @@
                   <div class="x-field x-field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4"></textarea></div>
                   <div class="x-field x-field--wide">
                     <label for="f-photos">Photos</label>
-                    <input id="f-photos" name="photos" type="file" accept="image/*" multiple />
-                    <small>Your email app opens with your details filled in; attach these photos to that email before sending.</small>
+                    <input id="f-photos" name="attachment" type="file" accept="image/*" />
+                    <small>Optional. Add a photo of the area so Harry can quote faster.</small>
                   </div>
-                  <button class="x-btn x-btn--solid" type="submit">Send quote request</button>
+                  <div class="x-form__send">
+                    <button class="x-btn x-btn--solid" type="submit">Send quote request</button>
+                    <small>Harry usually replies the same day.</small>
+                  </div>
                 </form>
+                <div class="x-sent" id="quote-sent" role="status" hidden>
+                  <h3>Thanks, your request is in.</h3>
+                  <p>Harry will get back to you shortly. Need it sooner? Call <a href="tel:+61437076939">0437 076 939</a>.</p>
+                </div>
                 <div class="x-details x-reveal">
                   <dl>
                     <dt>Phone</dt><dd><a href="tel:+61437076939">0437 076 939</a></dd>
@@ -752,29 +772,11 @@
           els.forEach(function (el) { io.observe(el); });
         }
 
-        var form = document.getElementById("quote-form");
-        form.addEventListener("submit", function (ev) {
-          ev.preventDefault();
-          var v = function (id) { return document.getElementById(id).value.trim(); };
-          var files = document.getElementById("f-photos").files;
-          var names = [];
-          for (var i = 0; i < files.length; i++) names.push(files[i].name);
-          var service = v("f-service") || "Landscaping";
-          var subject = "Quote request: " + service + (v("f-suburb") ? " – " + v("f-suburb") : "");
-          var body = [
-            "Name: " + v("f-name"),
-            "Phone: " + v("f-phone"),
-            "Email: " + v("f-email"),
-            "Suburb: " + v("f-suburb"),
-            "Service: " + service,
-            "",
-            "Message:",
-            v("f-message"),
-            "",
-            names.length ? "Photos to attach: " + names.join(", ") : ""
-          ].join("\n");
-          window.location.href = "mailto:harry@outstyle.com.au?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-        });
+        if (/[?&]sent=1(&|$)/.test(window.location.search)) {
+          document.getElementById("quote-form").hidden = true;
+          document.getElementById("quote-form").style.display = "none";
+          document.getElementById("quote-sent").hidden = false;
+        }
       })();
     </script>
   </body>
