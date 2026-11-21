@@ -251,6 +251,10 @@
       .x-svc p { font: var(--weight-regular) var(--size-body)/1.65 var(--sans); color: var(--x-muted); margin-top: 12px; }
       .x-services--text { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(40px, 5vw, 56px); border-top: 1px solid var(--x-line); }
       .x-services--text .x-svc { padding: 32px; background: var(--x-white); border-top: 2px solid var(--x-sage); }
+      .x-services--photos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .x-services--text { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .x-services--text .x-svc { grid-column: span 2; }
+      .x-services--text .x-svc:nth-last-child(-n+2) { grid-column: span 3; }
       .x-tag { display: inline-block; margin-top: 16px; font: var(--weight-medium) var(--size-caption)/1.4 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--x-green); background: rgb(201 180 138 / 0.28); padding: 6px 10px; }
 
       /* gallery */
@@ -367,6 +371,9 @@
       @media (max-width: 900px) {
         .x-head--split, .x-intro, .x-faq, .x-contact { grid-template-columns: 1fr; }
         .x-services, .x-quotes, .x-areas, .x-foot__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .x-services--photos, .x-services--text { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .x-services--text .x-svc, .x-services--text .x-svc:nth-last-child(-n+2) { grid-column: auto; }
+        .x-services--text .x-svc:last-child { grid-column: 1 / -1; }
         .x-gallery { columns: 2; }
         .x-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .x-steps li:nth-child(2) { border-right: 0; margin-right: 0; }
@@ -374,6 +381,8 @@
       }
       @media (max-width: 600px) {
         .x-services, .x-quotes, .x-areas, .x-foot__grid, .x-steps, .x-form { grid-template-columns: 1fr; }
+        .x-services--photos, .x-services--text { grid-template-columns: 1fr; }
+        .x-services--text .x-svc:last-child { grid-column: auto; }
         .x-steps li { border-right: 0; margin-right: 0; border-bottom: 1px solid var(--x-line); padding-right: 0; }
         .x-gallery { columns: 1; }
         .x-faq details p { padding-right: 0; }
@@ -455,7 +464,7 @@
                 </div>
                 <p class="x-lede">Nine services, one local team. Regular garden care or a one-off project, quoted free and done properly.</p>
               </div>
-              <div class="x-services">
+              <div class="x-services x-services--photos">
                 <article class="x-svc x-reveal" id="backyard-transformations">
                   <figure class="x-svc__media"><img src="cover.jpg" alt="Fresh turf lawn beside a synthetic court with a red Japanese maple, Canberra backyard transformation by Outstyle Property" width="1290" height="1696" loading="lazy" /></figure>
                   <p class="x-svc__num">01</p>
@@ -468,35 +477,33 @@
                   <h3>Lawn Mowing &amp; Lawn Care</h3>
                   <p>Regular or one-off mowing, edging, whipper-snipping and fertilising. Every visit is tuned to Canberra's seasons, from summer growth to winter frost, whether your lawn is fescue, couch or kikuyu.</p>
                 </article>
-                <article class="x-svc x-reveal" id="hedge-trimming">
-                  <figure class="x-svc__media"><img src="hedge-path.jpg" alt="Tall clipped conifer hedges beside a striped mown front lawn with mulch border, Canberra hedging by Outstyle Property" width="1290" height="1703" loading="lazy" /></figure>
-                  <p class="x-svc__num">03</p>
-                  <h3>Hedge Trimming &amp; Hedging</h3>
-                  <p>Formal hedges, screening conifers, shaping and height reduction. Lines are kept crisp and level, and all clippings are removed before we leave.</p>
-                </article>
                 <article class="x-svc x-reveal" id="garden-clean-ups">
                   <figure class="x-svc__media"><img src="gravel-path.jpg" alt="Tidy front yard with paver path, pebble beds and clipped shrubs after a garden clean-up in Canberra by Outstyle Property" width="1500" height="2000" loading="lazy" /></figure>
-                  <p class="x-svc__num">04</p>
+                  <p class="x-svc__num">03</p>
                   <h3>Garden Clean-ups &amp; Green Waste Removal</h3>
                   <p>Overgrown gardens brought back under control, plus end-of-lease and pre-sale tidy-ups. We cut back, weed and tidy, then take all the green waste away.</p>
-                </article>
-                <article class="x-svc x-reveal" id="mulching-garden-beds">
-                  <figure class="x-svc__media"><img src="curved-edge.jpg" alt="Curved brick lawn edge with fresh mulch garden beds and a conifer, Canberra mulching by Outstyle Property" width="790" height="1510" loading="lazy" /></figure>
-                  <p class="x-svc__num">05</p>
-                  <h3>Mulching &amp; Garden Beds</h3>
-                  <p>Fresh mulch, crisp lawn edging, weed control and planting. Beds that look sharp, hold moisture through Canberra summers and keep weeds down.</p>
                 </article>
                 <article class="x-svc x-reveal" id="granite-gravel-paths">
                   <figure class="x-svc__media x-svc__media--two">
                     <img src="stepper-path.jpg" alt="Sandstone stepper path through gravel leading to new turf and a deck, Canberra backyard by Outstyle Property" width="1500" height="2000" loading="lazy" />
                     <img src="granite-driveway.jpg" alt="Freshly laid decomposed granite beside a driveway with a wattle tree in Canberra by Outstyle Property" width="1500" height="2000" loading="lazy" />
                   </figure>
-                  <p class="x-svc__num">06</p>
+                  <p class="x-svc__num">04</p>
                   <h3>Granite, Gravel &amp; Woodchip Paths</h3>
                   <p>Decomposed granite, stepping stones and woodchip paths, laid on a properly prepared base. A low-maintenance, natural finish for side passages, driveways and garden walks.</p>
                 </article>
               </div>
               <div class="x-services x-services--text">
+                <article class="x-svc x-reveal" id="hedge-trimming">
+                  <p class="x-svc__num">05</p>
+                  <h3>Hedge Trimming &amp; Hedging</h3>
+                  <p>Formal hedges, screening conifers, shaping and height reduction. Lines are kept crisp and level, and all clippings are removed before we leave.</p>
+                </article>
+                <article class="x-svc x-reveal" id="mulching-garden-beds">
+                  <p class="x-svc__num">06</p>
+                  <h3>Mulching &amp; Garden Beds</h3>
+                  <p>Fresh mulch, crisp lawn edging, weed control and planting. Beds that look sharp, hold moisture through Canberra summers and keep weeds down.</p>
+                </article>
                 <article class="x-svc x-reveal" id="turf-laying">
                   <p class="x-svc__num">07</p>
                   <h3>Turf Laying &amp; New Lawns</h3>
@@ -529,9 +536,7 @@
                 <figure class="x-reveal"><img src="turf-court.jpg" alt="Aerial view of a pool, synthetic tennis court and lawn surrounds landscaped by Outstyle Property in Canberra" width="1290" height="1704" loading="lazy" /><figcaption>Pool, tennis court &amp; lawn surrounds</figcaption></figure>
                 <figure class="x-reveal"><img src="cover.jpg" alt="Fresh lawn with a red Japanese maple feature beside a modern Canberra home, by Outstyle Property" width="1290" height="1696" loading="lazy" /><figcaption>Fresh lawn and maple feature</figcaption></figure>
                 <figure class="x-reveal"><img src="stepper-path.jpg" alt="New turf lawn and sandstone stepper path to a deck, Canberra backyard by Outstyle Property" width="1500" height="2000" loading="lazy" /><figcaption>Stepper path to new turf and deck</figcaption></figure>
-                <figure class="x-reveal"><img src="curved-edge.jpg" alt="Curved brick lawn edging and fresh mulch beds in a Canberra garden by Outstyle Property" width="790" height="1510" loading="lazy" /><figcaption>Curved lawn edging and mulch</figcaption></figure>
                 <figure class="x-reveal"><img src="gravel-path.jpg" alt="Front-yard refresh with paver path, pebble beds and clipped shrubs in Canberra by Outstyle Property" width="1500" height="2000" loading="lazy" /><figcaption>Front-yard refresh</figcaption></figure>
-                <figure class="x-reveal"><img src="hedge-path.jpg" alt="Clipped conifer hedging and a striped mown lawn at a Canberra home by Outstyle Property" width="1290" height="1703" loading="lazy" /><figcaption>Hedging and striped lawn</figcaption></figure>
                 <figure class="x-reveal"><img src="patio-pergola.jpg" alt="Timber pergola with climbing plants over a paved courtyard and topiary ball, Canberra by Outstyle Property" width="1290" height="1706" loading="lazy" /><figcaption>Pergola courtyard</figcaption></figure>
                 <figure class="x-reveal"><img src="granite-driveway.jpg" alt="New decomposed granite area beside a driveway with a wattle tree, Canberra by Outstyle Property" width="1500" height="2000" loading="lazy" /><figcaption>New decomposed granite</figcaption></figure>
                 <figure class="x-reveal"><img src="lawn-blossom.jpg" alt="Freshly mown Canberra verge lawn under a gum tree, verge mowing by Outstyle Property" width="1500" height="2000" loading="lazy" /><figcaption>Verge mowing</figcaption></figure>
